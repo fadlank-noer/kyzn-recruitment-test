@@ -51,30 +51,32 @@ export async function addInvoice(req: Request, res: Response) {
 
 export const getInvoices = async (req: Request, res: Response) => {
     try {
-      // Get Req Query
-      const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 10;
-      const offset = (page - 1) * limit;
-  
-      // DB Query
-      const { count, rows } = await Invoice.findAndCountAll({
-        include: [{ model: ProductSold, as: "products" }],
-        limit,
-        offset,
-        order: [["date", "DESC"]], // urutkan by tanggal terbaru
-      });
-  
-      res.json({
-        data: rows,
-        pagination: {
-          total: count,
-          page,
+        // Get Req Query
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+        const offset = (page - 1) * limit;
+    
+        // DB Query
+        const count = await Invoice.count()
+        const rows = await Invoice.findAll({
+          include: [{ model: ProductSold, as: "products" }],
           limit,
-          totalPages: Math.ceil(count / limit),
-        },
-      });
+          offset,
+          order: [["date", "DESC"]], // urutkan by tanggal terbaru
+        });
+        console.log("Countt", count)
+    
+        res.json({
+          data: rows,
+          pagination: {
+            total: count,
+            page,
+            limit,
+            totalPages: Math.floor(count / limit),
+          },
+        });
     } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Failed to fetch invoices" });
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch invoices" });
     }
   };

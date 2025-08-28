@@ -1,7 +1,5 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store";
-import { fetchInvoices, FetchInvoiceResponse, CreateInvoiceResponse } from "@/api/invoice";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { CreateInvoiceResponse } from "@/api/invoice";
 import {
   LineChart,
   Line,

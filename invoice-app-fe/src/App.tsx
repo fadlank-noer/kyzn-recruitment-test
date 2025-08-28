@@ -6,6 +6,7 @@ import kyznLogo from "./assets/company_logo.png"
 import './App.css'
 import AddInvoice from './components/AddInvoice'
 import TimeSeries from './components/TimeSeries'
+import InvoiceCards from './components/InvoiceCards';
 
 function App() {
   // Fetch Invoice
@@ -38,12 +39,7 @@ function App() {
 
         <AddInvoice onCreated={setLastCreated} />
         <TimeSeries p_invoices={invoices}/>
-        {/* <InvoiceCards />
-        <TimeSeries /> */}
-
-        {/* {lastCreated && (
-          <div className="text-xs text-gray-500">Terakhir dibuat: #{lastCreated.invoice_no} — {lastCreated.customer}</div>
-        )} */}
+        <InvoiceCards p_invoices={invoices} pages={invoicePage} setPage={setInvoicePage} dispatch={dispatch}/>
       </div>
     </div>
   )
