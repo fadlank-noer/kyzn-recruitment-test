@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "jsx": "react-jsx",
+
+        "baseUrl": "./src",
+        "paths": {
+            "@/*": ["*"]
+        },
+
+        "moduleResolution": "Node",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "outDir": "dist"
+    },
+    "include": ["src/**/*", "public", "custom.d.ts"],
+    "exclude": ["node_modules"]
+  }
