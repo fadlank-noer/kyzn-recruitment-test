@@ -1,0 +1,34 @@
+version: "3.9"
+
+networks:
+  app-net:
+    driver: bridge
+
+services:
+  frontend:
+    build:
+      context: ./invoice-app-fe
+      dockerfile: Dockerfile
+    container_name: react-app
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    networks:
+      - app-net
+
+  backend:
+    build:
+      context: ./invoice-app-be
+      dockerfile: Dockerfile
+    container_name: express-app
+    ports:
+      - "3002:3002"
+    environment:
+      - DATABASE_URL=/app/database.sqlite
+    volumes:
+      - ./invoice-app-be/database.sqlite:/app/database.sqlite
+    networks:
+      - app-net
