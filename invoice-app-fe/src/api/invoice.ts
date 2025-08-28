@@ -1,9 +1,9 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import API from "./axios"
 
-interface AddInvoiceProduct {
+export interface AddInvoiceProduct {
     item: string
-    quantity: string
+    quantity: number
     total_cogs: number
     total_price: number
 }
@@ -31,15 +31,15 @@ export interface CreateInvoiceResponse extends CreateInvoiceRequest {
 export const createInvoice = createAsyncThunk(
     "invoices/create",
     async (invoice: CreateInvoiceRequest) => {
-        const res = await axios.post(`/api/invoice`, invoice);
-        return res.data as CreateInvoiceResponse;
+        const res = await API.post(`/invoice`, invoice);
+        return res;
     }
 );
 
 export const fetchInvoices = createAsyncThunk(
     "invoices/fetch",
     async (page: number) => {
-      const res = await axios.get(`/api/invoices?page=${page}`);
+      const res = await API.get(`/invoices?page=${page}`);
       return res.data; // pastikan API return { data: Invoice[], hasMore: boolean }
     }
 );

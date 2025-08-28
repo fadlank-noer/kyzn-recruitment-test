@@ -1,6 +1,7 @@
 import express, { type Express } from "express";
 import { initDB } from "@/models/index"
 import PublicRoute from "@/common/routes"
+import cors from "cors"
 
 // Load ENV
 import { env } from "@/common/config"
@@ -15,6 +16,10 @@ async function main() {
     // Middlewares
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
+    app.use(cors({
+        origin: "*",        
+        methods: ["GET", "POST"]
+    }))
 
     // Call Routes
     app.use("/api/v1", PublicRoute)

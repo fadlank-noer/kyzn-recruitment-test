@@ -16,6 +16,6 @@
         "forceConsistentCasingInFileNames": true,
         "outDir": "dist"
     },
-    "include": ["src/**/*", "public", "custom.d.ts"],
+    "include": ["src/**/*", "public", "custom.d.ts", "vite.env.d.ts"],
     "exclude": ["node_modules"]
   }
