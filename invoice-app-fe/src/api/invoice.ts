@@ -27,6 +27,16 @@ export interface CreateInvoiceResponse extends CreateInvoiceRequest {
     products: ResponseAddInvoiceProduct[]
 }
 
+export interface FetchInvoiceResponse {
+    data: CreateInvoiceResponse[],
+    pagination: {
+        total: number
+        page: number
+        limit: number
+        totalPages: number
+    }
+}
+
 // Add Invoice
 export const createInvoice = createAsyncThunk(
     "invoices/create",
@@ -40,7 +50,7 @@ export const fetchInvoices = createAsyncThunk(
     "invoices/fetch",
     async (page: number) => {
       const res = await API.get(`/invoices?page=${page}`);
-      return res.data; // pastikan API return { data: Invoice[], hasMore: boolean }
+      return res.data as FetchInvoiceResponse;
     }
 );
   

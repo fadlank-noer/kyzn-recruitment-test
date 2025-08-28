@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AddInvoiceProduct, CreateInvoiceResponse, fetchInvoices, createInvoice } from "../api/invoice"
 
-interface InvoiceState {
+export interface InvoiceState {
   list: CreateInvoiceResponse[];
   status: "idle" | "loading" | "failed";
   page: number;
@@ -18,26 +18,19 @@ const initialState: InvoiceState = {
 const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
-  reducers: {
-    addInvoiceLocal: (state, action: PayloadAction<CreateInvoiceResponse>) => {
-      state.list.unshift(action.payload);
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      // GET
-    //   .addCase(fetchInvoices.pending, (state) => {
-    //     state.status = "loading";
-    //   })
-    //   .addCase(fetchInvoices.fulfilled, (state, action) => {
-    //     state.status = "idle";
-    //     state.list = [...state.list, ...action.payload.data];
-    //     state.hasMore = action.payload.hasMore;
-    //     state.page += 1;
-    //   })
-    //   .addCase(fetchInvoices.rejected, (state) => {
-    //     state.status = "failed";
-    //   })
+    // GET
+    .addCase(fetchInvoices.pending, (state) => {
+        state.status = "loading";
+    })
+    .addCase(fetchInvoices.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.list = [...state.list, ...action.payload.data];
+        state.hasMore = action.payload.pagination.totalPages < action.payload.pagination.page;
+        state.page += 1;
+    })
 
     // POST
     .addCase(createInvoice.fulfilled, (state, action) => {
@@ -46,5 +39,4 @@ const invoiceSlice = createSlice({
   },
 });
 
-export const { addInvoiceLocal } = invoiceSlice.actions;
 export default invoiceSlice.reducer;

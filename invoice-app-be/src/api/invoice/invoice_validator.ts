@@ -2,7 +2,7 @@ import { ValidatorResult } from "@/common/validator"
 
 export interface AddInvoiceProduct {
     item: string
-    quantity: string
+    quantity: number
     total_cogs: number
     total_price: number
 }

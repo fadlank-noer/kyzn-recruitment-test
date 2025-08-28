@@ -46,16 +46,20 @@ export default function ProductAutocomplete({ product, setProduct }: Props) {
   function handleQuantityChange(name: string, qty: number) {
     setProduct((prev) => {
         const local_store: AddInvoiceProduct[] = []
-
         prev.map((prod) => {
             // Check Name
             if (prod.item === name) {
                 if (qty > 0) {
+                    const _qty = (qty > 0 ? qty : 1);
                     local_store.push({
                         ...prod,
-                        quantity: qty > 0 ? qty : 1,
-                        total_price: prod.total_cogs + ((qty > 0 ? qty : 1) * 20 / 100),
+                        quantity: _qty,
+                        total_price: (prod.total_cogs * _qty) + (prod.total_cogs * _qty * 20 / 100),
                     })
+                }
+            } else {
+                if (qty > 0) {
+                    local_store.push(prod)
                 }
             }
         })
